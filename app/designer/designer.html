@@ -1,0 +1,10 @@
+<textarea [(ngModel)]="text" (ngModelChange)="updateQuestion()" cols="100" rows="10"></textarea>
+
+<p>{{question}}</p>
+<ul>
+    <li *ngFor="let answer of getAnswers()">
+        <span>{{answer}}</span>
+    </li>
+</ul>
+
+<button type="submit" (click)="submit()">Submit</button>
