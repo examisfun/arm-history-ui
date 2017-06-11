@@ -11,6 +11,7 @@ import {getTextSubstrings} from "../../shared-functions";
 })
 export class TestComponent implements OnInit {
     private question = "";
+    private subQuestion = "";
     private answers: any = {};
 
     @Input() test: Test = <Test>{};
@@ -24,17 +25,20 @@ export class TestComponent implements OnInit {
 
     private updateQuestion() {
         this.question = "";
+        this.subQuestion = "";
         this.answers = {};
 
-        switch (this.test.type) {
-            case TestType.STANDARD:
-                this.parseStandardTest();
-                break;
-            case TestType.SUBQUESTION:
-                this.parseSubQuestionTest();
-                break;
+        try {
+            switch (this.test.type) {
+                case TestType.STANDARD:
+                    this.parseStandardTest();
+                    break;
+                case TestType.SUBQUESTION:
+                    this.parseSubQuestionTest();
+                    break;
+            }
         }
-
+        catch (ex) {}
     }
 
     getAnswers() {
@@ -50,11 +54,39 @@ export class TestComponent implements OnInit {
     }
 
     private parseStandardTest() {
+        let text = this.test.text.replace(/\n(?!\d[)])(?![ա-ֆ][․)])/g, " ");
+
+        let possibleAnswerStart = /\n\d[)]/g.exec(text).index;
+        this.question = text.substring(0, possibleAnswerStart).replace(/^\s\n+|\s\n+$/g, '').trim();
+
+        this.extractPossibleAnswers();
+    }
+
+    private parseSubQuestionTest() {
         let text = this.test.text;
+        console.log(this.test.text)
+
+        let subQuestionStart = /\n[ա][.)]/g.exec(text).index;
+        let subQuestionEnd = /\n[1)]/g.exec(text).index;
+
+        this.question = text.substring(0, subQuestionStart).replace(/^\s\n+|\s\n+$/g, '').trim();
+        this.subQuestion = text.substring(subQuestionStart, subQuestionEnd).replace(/\n(?![ա-ֆ][.)])/g, " ");
+
+        this.extractPossibleAnswers();
+    }
+
+    submit() {
+        this.designerService.saveQuestion(this.question, this.answers).subscribe();
+    }
+
+    private extractPossibleAnswers() {
+        let text = this.test.text;
+
+        let match;
+
         let numberParenthesisRegex = /\d+[)]/g;
         let numberStartEndIndexes: Array<number> = [];
 
-        let match;
         while (match = numberParenthesisRegex.exec(text)) {
             numberStartEndIndexes.push(match.index, numberParenthesisRegex.lastIndex);
         }
@@ -62,20 +94,11 @@ export class TestComponent implements OnInit {
         if (numberStartEndIndexes.length) {
             let textParts = getTextSubstrings(text, numberStartEndIndexes);
 
-            this.question = textParts[0].replace(/^\s\n+|\s\n+$/g, '').trim();
-
             for (let i = 1; i < textParts.length; i += 2) {
                 let answerNumber = +textParts[i].substring(0, textParts[i].length - 1);
                 let answerText = textParts[i + 1].replace(/^\s\n+|\s\n+$/g, '').trim();
                 this.answers[answerNumber] = answerText;
             }
         }
-    }
-
-    private parseSubQuestionTest() {
-    }
-
-    submit() {
-        this.designerService.saveQuestion(this.question, this.answers).subscribe();
     }
 }

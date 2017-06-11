@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {TestType} from "./test/test-type.enum";
 import {Test} from "./test/test.model";
 import {getTextSubstrings} from "../shared-functions";
@@ -13,7 +13,6 @@ export class DesignerComponent {
     private text = "";
     public tests: Array<Test> = [];
     public testTypes = TestType.STANDARD;
-
 
     separateTests() {
         let match;

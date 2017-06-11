@@ -17,6 +17,7 @@ var TestComponent = (function () {
     function TestComponent(designerService) {
         this.designerService = designerService;
         this.question = "";
+        this.subQuestion = "";
         this.answers = {};
         this.test = {};
     }
@@ -25,15 +26,19 @@ var TestComponent = (function () {
     };
     TestComponent.prototype.updateQuestion = function () {
         this.question = "";
+        this.subQuestion = "";
         this.answers = {};
-        switch (this.test.type) {
-            case test_type_enum_1.TestType.STANDARD:
-                this.parseStandardTest();
-                break;
-            case test_type_enum_1.TestType.SUBQUESTION:
-                this.parseSubQuestionTest();
-                break;
+        try {
+            switch (this.test.type) {
+                case test_type_enum_1.TestType.STANDARD:
+                    this.parseStandardTest();
+                    break;
+                case test_type_enum_1.TestType.SUBQUESTION:
+                    this.parseSubQuestionTest();
+                    break;
+            }
         }
+        catch (ex) { }
     };
     TestComponent.prototype.getAnswers = function () {
         return Object.values(this.answers);
@@ -45,27 +50,39 @@ var TestComponent = (function () {
         return test_type_enum_1.TestType[value];
     };
     TestComponent.prototype.parseStandardTest = function () {
+        var text = this.test.text.replace(/\n(?!\d[)])(?![ա-ֆ][․)])/g, " ");
+        var possibleAnswerStart = /\n\d[)]/g.exec(text).index;
+        this.question = text.substring(0, possibleAnswerStart).replace(/^\s\n+|\s\n+$/g, '').trim();
+        this.extractPossibleAnswers();
+    };
+    TestComponent.prototype.parseSubQuestionTest = function () {
         var text = this.test.text;
+        console.log(this.test.text);
+        var subQuestionStart = /\n[ա][.)]/g.exec(text).index;
+        var subQuestionEnd = /\n[1)]/g.exec(text).index;
+        this.question = text.substring(0, subQuestionStart).replace(/^\s\n+|\s\n+$/g, '').trim();
+        this.subQuestion = text.substring(subQuestionStart, subQuestionEnd).replace(/\n(?![ա-ֆ][.)])/g, " ");
+        this.extractPossibleAnswers();
+    };
+    TestComponent.prototype.submit = function () {
+        this.designerService.saveQuestion(this.question, this.answers).subscribe();
+    };
+    TestComponent.prototype.extractPossibleAnswers = function () {
+        var text = this.test.text;
+        var match;
         var numberParenthesisRegex = /\d+[)]/g;
         var numberStartEndIndexes = [];
-        var match;
         while (match = numberParenthesisRegex.exec(text)) {
             numberStartEndIndexes.push(match.index, numberParenthesisRegex.lastIndex);
         }
         if (numberStartEndIndexes.length) {
             var textParts = shared_functions_1.getTextSubstrings(text, numberStartEndIndexes);
-            this.question = textParts[0].replace(/^\s\n+|\s\n+$/g, '').trim();
             for (var i = 1; i < textParts.length; i += 2) {
                 var answerNumber = +textParts[i].substring(0, textParts[i].length - 1);
                 var answerText = textParts[i + 1].replace(/^\s\n+|\s\n+$/g, '').trim();
                 this.answers[answerNumber] = answerText;
             }
         }
-    };
-    TestComponent.prototype.parseSubQuestionTest = function () {
-    };
-    TestComponent.prototype.submit = function () {
-        this.designerService.saveQuestion(this.question, this.answers).subscribe();
     };
     return TestComponent;
 }());
