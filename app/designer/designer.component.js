@@ -5,53 +5,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var core_1 = require("@angular/core");
-var designer_service_1 = require("./designer.service");
+var test_type_enum_1 = require("./test/test-type.enum");
+var shared_functions_1 = require("../shared-functions");
 var DesignerComponent = (function () {
-    function DesignerComponent(designerService) {
-        this.designerService = designerService;
+    function DesignerComponent() {
         this.text = "";
-        this.question = "";
-        this.answers = {};
+        this.tests = [];
+        this.testTypes = test_type_enum_1.TestType.STANDARD;
     }
-    DesignerComponent.prototype.updateQuestion = function () {
-        this.question = "";
-        this.answers = {};
+    DesignerComponent.prototype.separateTests = function () {
+        var _this = this;
         var match;
-        var numberParenthesisRegex = /\d+[)]/g;
-        var questionIndexes = [];
-        while (match = numberParenthesisRegex.exec(this.text)) {
-            questionIndexes.push([match.index, numberParenthesisRegex.lastIndex]);
+        var newQuestionRegex = /\n\d+[.]/g;
+        var newTestIndexes = [];
+        while (match = newQuestionRegex.exec(this.text)) {
+            newTestIndexes.push(match.index);
         }
-        if (questionIndexes.length) {
-            this.question = this.text.substring(0, questionIndexes[0][0]);
-            for (var i = 0; i < questionIndexes.length; ++i) {
-                var numberStart = questionIndexes[i][0];
-                var numberEnd = questionIndexes[i][1] - 1;
-                var answerStart = questionIndexes[i][1];
-                var answerEnd = void 0;
-                if (i != questionIndexes.length - 1) {
-                    answerEnd = questionIndexes[i + 1][0];
-                }
-                else {
-                    answerEnd = this.text.length;
-                }
-                var answerNumber = +this.text.substring(numberStart, numberEnd);
-                var answerText = this.text.substring(answerStart, answerEnd);
-                this.answers[answerNumber] = answerText;
-            }
-            console.log("question:", this.question);
-            console.log("answers:", this.answers);
-        }
+        this.tests = shared_functions_1.getTextSubstrings(this.text, newTestIndexes)
+            .map(function (testText) { return testText.replace(/^\s\n+|\s\n+$/g, '').trim(); })
+            .map(function (testText) { return ({ text: testText, type: _this.testTypes }); });
+        // this.tests = this.text
+        //     .replace(/\n\d+[.]/g, "\n\n")
+        //     .split('\n\n')
+        //     .map(test => test.replace(/\n(?!\d+[)])/g, " "))
+        //     .map(test => test.replace(/^\s\n+|\s\n+$/g,''))
+        //     .map(test => test.trim())
+        //     .filter(test => test != "");
     };
-    DesignerComponent.prototype.getAnswers = function () {
-        return Object.values(this.answers);
+    DesignerComponent.prototype.getTestTypeValues = function () {
+        return Object.values(test_type_enum_1.TestType).filter(function (e) { return typeof (e) == "number"; });
     };
-    DesignerComponent.prototype.submit = function () {
-        this.designerService.saveQuestion(this.question, this.answers).subscribe();
+    DesignerComponent.prototype.getTestTypeName = function (value) {
+        return test_type_enum_1.TestType[value];
     };
     return DesignerComponent;
 }());
@@ -60,8 +46,7 @@ DesignerComponent = __decorate([
         moduleId: module.id,
         templateUrl: 'designer.html',
         styleUrls: ['designer.css']
-    }),
-    __metadata("design:paramtypes", [designer_service_1.DesignerService])
+    })
 ], DesignerComponent);
 exports.DesignerComponent = DesignerComponent;
 //# sourceMappingURL=designer.component.js.map

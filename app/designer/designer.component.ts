@@ -1,5 +1,7 @@
-import {Component} from "@angular/core";
-import {DesignerService} from "./designer.service";
+import {Component, OnChanges, OnInit} from "@angular/core";
+import {TestType} from "./test/test-type.enum";
+import {Test} from "./test/test.model";
+import {getTextSubstrings} from "../shared-functions";
 
 @Component({
     moduleId: module.id,
@@ -7,56 +9,39 @@ import {DesignerService} from "./designer.service";
     styleUrls: ['designer.css']
 })
 export class DesignerComponent {
+
     private text = "";
+    public tests: Array<Test> = [];
+    public testTypes = TestType.STANDARD;
 
-    private question = "";
-    private answers: any = {};
 
-    constructor(private designerService: DesignerService) {
-    }
-
-    private updateQuestion() {
-        this.question = "";
-        this.answers = {};
-
+    separateTests() {
         let match;
-        let numberParenthesisRegex = /\d+[)]/g;
+        let newQuestionRegex = /\n\d+[.]/g;
+        let newTestIndexes: Array<number> = [];
 
-        let questionIndexes: any = [];
-        while (match = numberParenthesisRegex.exec(this.text)) {
-            questionIndexes.push([match.index, numberParenthesisRegex.lastIndex]);
+        while (match = newQuestionRegex.exec(this.text)) {
+            newTestIndexes.push(match.index);
         }
-
-        if (questionIndexes.length) {
-            this.question = this.text.substring(0, questionIndexes[0][0]);
-
-            for (let i = 0; i < questionIndexes.length; ++i) {
-                let numberStart = questionIndexes[i][0];
-                let numberEnd = questionIndexes[i][1] - 1;
-                let answerStart = questionIndexes[i][1];
-                let answerEnd: number;
-                if (i != questionIndexes.length - 1) {
-                    answerEnd = questionIndexes[i + 1][0];
-                }
-                else {
-                    answerEnd = this.text.length;
-                }
-                let answerNumber = +this.text.substring(numberStart, numberEnd);
-                let answerText = this.text.substring(answerStart, answerEnd);
-                this.answers[answerNumber] = answerText;
-            }
+        this.tests = getTextSubstrings(this.text, newTestIndexes)
+            .map(testText => testText.replace(/^\s\n+|\s\n+$/g, '').trim())
+            .map(testText => <Test> {text: testText, type: this.testTypes});
 
 
-            console.log("question:", this.question);
-            console.log("answers:", this.answers);
-        }
+        // this.tests = this.text
+        //     .replace(/\n\d+[.]/g, "\n\n")
+        //     .split('\n\n')
+        //     .map(test => test.replace(/\n(?!\d+[)])/g, " "))
+        //     .map(test => test.replace(/^\s\n+|\s\n+$/g,''))
+        //     .map(test => test.trim())
+        //     .filter(test => test != "");
     }
 
-    getAnswers() {
-        return Object.values(this.answers);
+    getTestTypeValues() {
+        return Object.values(TestType).filter(e => typeof( e ) == "number");
     }
 
-    submit() {
-        this.designerService.saveQuestion(this.question, this.answers).subscribe();
+    getTestTypeName(value: number) {
+        return TestType[value];
     }
 }

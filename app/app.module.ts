@@ -6,10 +6,11 @@ import {AppComponent} from "./app.component";
 import {routing} from "./app.routes";
 import {DesignerComponent} from "./designer/designer.component";
 import {DesignerService} from "./designer/designer.service";
+import {TestComponent} from "./designer/test/test.component";
 
 @NgModule({
     imports: [BrowserModule, routing, HttpModule, FormsModule, ReactiveFormsModule],
-    declarations: [AppComponent, DesignerComponent],
+    declarations: [AppComponent, DesignerComponent, TestComponent],
     providers: [DesignerService],
     bootstrap: [AppComponent]
 })
