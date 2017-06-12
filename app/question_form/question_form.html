@@ -1,0 +1,14 @@
+<div>
+    <div style="margin: 2%">
+        <label> Առարկան՝ </label>
+        <select [(ngModel)]="selectedSubjectId" (change)="loadHeadersBySubjectId(selectedSubjectId)">
+            <option selected>--ընտրել առարկան--</option>
+            <option *ngFor="let subject of subjects" [value]="subject.subjectId">{{subject.name}}</option>
+        </select>
+        <label> Գլուխը՝ </label>
+        <select [(ngModel)]="selectedHeaderId">
+            <option selected>--ընտրել գլուխը--</option>
+            <option *ngFor="let header of headers" [value]="header">{{header.name}}</option>
+        </select>
+    </div>
+</div>

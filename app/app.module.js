@@ -14,6 +14,8 @@ var app_routes_1 = require("./app.routes");
 var designer_component_1 = require("./designer/designer.component");
 var designer_service_1 = require("./designer/designer.service");
 var test_component_1 = require("./designer/test/test.component");
+var question_form_component_1 = require("./question_form/question_form.component");
+var question_form_service_1 = require("./question_form/question_form.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -22,8 +24,8 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, app_routes_1.routing, http_1.HttpModule, forms_1.FormsModule, forms_1.ReactiveFormsModule],
-        declarations: [app_component_1.AppComponent, designer_component_1.DesignerComponent, test_component_1.TestComponent],
-        providers: [designer_service_1.DesignerService],
+        declarations: [app_component_1.AppComponent, designer_component_1.DesignerComponent, test_component_1.TestComponent, question_form_component_1.QuestionFormComponent],
+        providers: [designer_service_1.DesignerService, question_form_service_1.QuestionFormService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
