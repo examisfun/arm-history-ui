@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require("@angular/core");
 var test_type_enum_1 = require("./test/test-type.enum");
-var shared_functions_1 = require("../shared-functions");
+var parse_helper_1 = require("./parse-helper");
 var DesignerComponent = (function () {
     function DesignerComponent() {
         this.text = "";
@@ -22,7 +22,7 @@ var DesignerComponent = (function () {
         while (match = newQuestionRegex.exec(this.text)) {
             newTestIndexes.push(match.index);
         }
-        this.tests = shared_functions_1.getTextSubstrings(this.text, newTestIndexes)
+        this.tests = parse_helper_1.getTextSubstrings(this.text, newTestIndexes)
             .map(function (testText) { return testText.replace(/^\s\n+|\s\n+$/g, '').trim(); })
             .map(function (testText) { return ({ text: testText, type: _this.testTypes }); });
         // this.tests = this.text

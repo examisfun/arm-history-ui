@@ -1,23 +1,26 @@
-<div style="float: left">
-    <textarea [(ngModel)]="test.text" (ngModelChange)="updateQuestion(test.text)" cols="100" rows="5"></textarea>
+<div style="width: 70%; margin: 30px auto 0;">
+    <div style="float: left">
+        <textarea [(ngModel)]="test.text" (ngModelChange)="updateQuestion(test.text)" cols="100" rows="5"></textarea>
+    </div>
+
+    <div *ngFor="let choice of getTestTypeValues()">
+        <input type="radio"
+               [(ngModel)]="test.type"
+               (ngModelChange)="updateQuestion()"
+               [checked]="test.type==choice"
+               [value]="choice"
+               [name]="test.text"/>
+        {{getTestTypeName(choice)}}<br>
+    </div>
+
+    <div style="clear: both">
+        <p>{{questionNumber}}. {{question}}</p>
+        <p>{{subQuestion}}</p>
+        <ul>
+            <li *ngFor="let answer of getAnswers()">
+                <span>{{answer}}</span>
+            </li>
+        </ul>
+    </div>
 </div>
 
-<div *ngFor="let choice of getTestTypeValues()">
-    <input type="radio"
-           [(ngModel)]="test.type"
-           (ngModelChange)="updateQuestion()"
-           [checked]="test.type==choice"
-           [value]="choice"
-           [name]="test.text"/>
-    {{getTestTypeName(choice)}}<br>
-</div>
-
-<div style="clear: both">
-    <p>{{question}}</p>
-    <p>{{subQuestion}}</p>
-    <ul>
-        <li *ngFor="let answer of getAnswers()">
-            <span>{{answer}}</span>
-        </li>
-    </ul>
-</div>

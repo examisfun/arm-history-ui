@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var designer_service_1 = require("../designer.service");
 var test_model_1 = require("./test.model");
 var test_type_enum_1 = require("./test-type.enum");
-var shared_functions_1 = require("../../shared-functions");
+var parse_helper_1 = require("../parse-helper");
 var TestComponent = (function () {
     function TestComponent(designerService) {
         this.designerService = designerService;
@@ -25,20 +25,29 @@ var TestComponent = (function () {
         this.updateQuestion();
     };
     TestComponent.prototype.updateQuestion = function () {
+        this.questionNumber = -1;
         this.question = "";
         this.subQuestion = "";
         this.answers = {};
         try {
+            var extractedQuestion = parse_helper_1.extractQuestionNumber(this.test.text);
+            this.questionNumber = extractedQuestion.questionNumber;
+            var text = extractedQuestion.text;
+            var parseResult = void 0;
             switch (this.test.type) {
                 case test_type_enum_1.TestType.STANDARD:
-                    this.parseStandardTest();
+                    parseResult = parse_helper_1.parseStandardTest(text);
                     break;
                 case test_type_enum_1.TestType.SUBQUESTION:
-                    this.parseSubQuestionTest();
+                    parseResult = parse_helper_1.parseSubQuestionTest(text);
                     break;
             }
+            this.question = parseResult.question;
+            this.subQuestion = parseResult.subQuestion;
+            this.answers = parseResult.possibleAnswers;
         }
-        catch (ex) { }
+        catch (ex) {
+        }
     };
     TestComponent.prototype.getAnswers = function () {
         return Object.values(this.answers);
@@ -49,40 +58,8 @@ var TestComponent = (function () {
     TestComponent.prototype.getTestTypeName = function (value) {
         return test_type_enum_1.TestType[value];
     };
-    TestComponent.prototype.parseStandardTest = function () {
-        var text = this.test.text.replace(/\n(?!\d[)])(?![ա-ֆ][․)])/g, " ");
-        var possibleAnswerStart = /\n\d[)]/g.exec(text).index;
-        this.question = text.substring(0, possibleAnswerStart).replace(/^\s\n+|\s\n+$/g, '').trim();
-        this.extractPossibleAnswers();
-    };
-    TestComponent.prototype.parseSubQuestionTest = function () {
-        var text = this.test.text;
-        console.log(this.test.text);
-        var subQuestionStart = /\n[ա][.)]/g.exec(text).index;
-        var subQuestionEnd = /\n[1)]/g.exec(text).index;
-        this.question = text.substring(0, subQuestionStart).replace(/^\s\n+|\s\n+$/g, '').trim();
-        this.subQuestion = text.substring(subQuestionStart, subQuestionEnd).replace(/\n(?![ա-ֆ][.)])/g, " ");
-        this.extractPossibleAnswers();
-    };
     TestComponent.prototype.submit = function () {
         this.designerService.saveQuestion(this.question, this.answers).subscribe();
-    };
-    TestComponent.prototype.extractPossibleAnswers = function () {
-        var text = this.test.text;
-        var match;
-        var numberParenthesisRegex = /\d+[)]/g;
-        var numberStartEndIndexes = [];
-        while (match = numberParenthesisRegex.exec(text)) {
-            numberStartEndIndexes.push(match.index, numberParenthesisRegex.lastIndex);
-        }
-        if (numberStartEndIndexes.length) {
-            var textParts = shared_functions_1.getTextSubstrings(text, numberStartEndIndexes);
-            for (var i = 1; i < textParts.length; i += 2) {
-                var answerNumber = +textParts[i].substring(0, textParts[i].length - 1);
-                var answerText = textParts[i + 1].replace(/^\s\n+|\s\n+$/g, '').trim();
-                this.answers[answerNumber] = answerText;
-            }
-        }
     };
     return TestComponent;
 }());

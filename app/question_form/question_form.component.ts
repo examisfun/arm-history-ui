@@ -34,15 +34,15 @@ export class QuestionFormComponent implements OnInit{
             });
     }
 
-    loadHeadersBySubjectId(subjectId : number){
-        console.log(subjectId)
-        if(subjectId != null){
-            this.questionFormService.getHeadersBySubjectId(subjectId).subscribe(
-                headers => this.headers = headers, //Bind to view
-                err => {
-                    // Log errors if any
-                    console.log(err);
-                });
-        }
-    }
+    // loadHeadersBySubjectId(subjectId : number){
+    //     console.log(subjectId)
+    //     if(subjectId != null){
+    //         this.questionFormService.getHeadersBySubjectId(subjectId).subscribe(
+    //             headers => this.headers = headers, //Bind to view
+    //             err => {
+    //                 // Log errors if any
+    //                 console.log(err);
+    //             });
+    //     }
+    // }
 }

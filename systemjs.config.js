@@ -3,6 +3,7 @@
 	var map = {
 		"app": "app",
 		"@angular": "node_modules/@angular",
+		"primeng": "node_modules/primeng",
 		"angular2-in-memory-web-api": "node_modules/angular2-in-memory-web-api",
 		"angular2-component-outlet": "node_modules/angular2-component-outlet",
 		"angular2-cookie": "node_modules/angular2-cookie",
@@ -13,6 +14,7 @@
 	var packages = {
 		"app": {main: "main.js", defaultExtension: "js"},
 		"rxjs": {defaultExtension: "js"},
+		"primeng": {defaultExtension: "js"},
 		"angular2-component-outlet": {main: "index.js", defaultExtension: "js"},
 		"angular2-in-memory-web-api": {main: "index.js", defaultExtension: "js"},
 		"angular2-cookie": {defaultExtension: 'js', main: 'core.js'}
@@ -28,7 +30,8 @@
 		"platform-browser-dynamic",
 		"router",
 		"router-deprecated",
-		"upgrade"
+		"upgrade",
+		"animations"
 	];
 
 	// Individual files (~300 requests):

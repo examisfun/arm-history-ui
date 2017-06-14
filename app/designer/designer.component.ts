@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {TestType} from "./test/test-type.enum";
 import {Test} from "./test/test.model";
-import {getTextSubstrings} from "../shared-functions";
+import {getTextSubstrings} from "./parse-helper";
 
 @Component({
     moduleId: module.id,

@@ -9,10 +9,12 @@ import {DesignerService} from "./designer/designer.service";
 import {TestComponent} from "./designer/test/test.component";
 import {QuestionFormComponent} from "./question_form/question_form.component";
 import {QuestionFormService} from "./question_form/question_form.service";
+import {DataListModule} from "primeng/primeng";
+import {QuestionPathComponent} from "./designer/question-path/question-path.component";
 
 @NgModule({
-    imports: [BrowserModule, routing, HttpModule, FormsModule, ReactiveFormsModule],
-    declarations: [AppComponent, DesignerComponent, TestComponent, QuestionFormComponent],
+    imports: [BrowserModule, routing, HttpModule, FormsModule, ReactiveFormsModule, DataListModule],
+    declarations: [AppComponent, DesignerComponent, TestComponent, QuestionFormComponent, QuestionPathComponent],
     providers: [DesignerService, QuestionFormService],
     bootstrap: [AppComponent]
 })

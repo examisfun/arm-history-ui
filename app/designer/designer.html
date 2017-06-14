@@ -1,18 +1,30 @@
-<div style="float: left">
-    <textarea [(ngModel)]="text" (ngModelChange)="separateTests()" cols="100" rows="20"></textarea>
-</div>
-<div *ngFor="let choice of getTestTypeValues()">
-    <input type="radio"
-           [(ngModel)]="testTypes"
-           (ngModelChange)="separateTests()"
-           [checked]="testTypes==choice"
-           [value]="choice"
-           name="all"/>
-    {{getTestTypeName(choice)}}<br>
-</div>
-<div style="clear: both">
-    <h4>Tests</h4>
-    <test *ngFor="let test of tests" [test]="test"></test>
-</div>
+<div style="width: 70%; margin: 30px auto 0;">
+    <question-path></question-path>
+    <div style="float: left">
+        <textarea [(ngModel)]="text" (ngModelChange)="separateTests()" cols="100" rows="20"></textarea>
+    </div>
+    <div *ngFor="let choice of getTestTypeValues()">
+        <input type="radio"
+               [(ngModel)]="testTypes"
+               (ngModelChange)="separateTests()"
+               [checked]="testTypes==choice"
+               [value]="choice"
+               name="all"/>
+        {{getTestTypeName(choice)}}<br>
+    </div>
+    <div style="clear: both">
+        <p-header>
+            <h2 style="width: 70%; margin: 30px auto 0; text-align: center">Tests</h2>
+        </p-header>
+        <p-dataList [value]="tests">
+            <ng-template let-test pTemplate="item">
+                <test [test]="test"></test>
+                <hr/>
+            </ng-template>
+        </p-dataList>
 
-<button type="submit" (click)="submit()">Submit</button>
+        <!--<test *ngFor="let test of tests" [test]="test"></test>-->
+    </div>
+
+    <button type="submit" (click)="submit()">Submit</button>
+</div>

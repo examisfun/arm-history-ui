@@ -1,0 +1,12 @@
+<label> Առարկան՝ </label>
+<select [(ngModel)]="selectedSubjectId" (change)="loadBooks(selectedSubjectId)">
+    <option selected>--ընտրել առարկան--</option>
+    <option *ngFor="let subject of subjects" [value]="subject.subjectId">{{subject.name}}</option>
+</select>
+<div *ngIf="selectedSubjectId">
+    <label> Գլուխը՝ </label>
+    <select [(ngModel)]="selectedBookId">
+        <option selected>--ընտրել գլուխը--</option>
+        <option *ngFor="let book of books" [value]="book.bookId">{{book.name}}</option>
+    </select>
+</div>
