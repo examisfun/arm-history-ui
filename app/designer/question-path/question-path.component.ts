@@ -81,6 +81,8 @@ export class QuestionPathComponent {
     private loadParts(bookId: number) {
         this.partItems = [];
         this.partItems.push({label: '--ընտրել մասը--', value: null});
+        this.headerItems = [];
+        this.headerItems.push({label: '--ընտրել գլուխը--', value: null});
         if (bookId != null) {
             this.questionFormService.getParts(bookId).
             subscribe(parts => {
