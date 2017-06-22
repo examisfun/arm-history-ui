@@ -5,6 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var platform_browser_1 = require("@angular/platform-browser");
@@ -18,6 +19,11 @@ var question_form_component_1 = require("./question_form/question_form.component
 var question_form_service_1 = require("./question_form/question_form.service");
 var primeng_1 = require("primeng/primeng");
 var question_path_component_1 = require("./designer/question-path/question-path.component");
+var dropdown_1 = require("primeng/components/dropdown/dropdown");
+var animations_1 = require("@angular/platform-browser/animations");
+var user_management_service_1 = require("./user-management/user-management.service");
+var login_register_component_1 = require("./user-management/login-register.component");
+var material_1 = require("@angular/material");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -25,9 +31,32 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, app_routes_1.routing, http_1.HttpModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, primeng_1.DataListModule],
-        declarations: [app_component_1.AppComponent, designer_component_1.DesignerComponent, test_component_1.TestComponent, question_form_component_1.QuestionFormComponent, question_path_component_1.QuestionPathComponent],
-        providers: [designer_service_1.DesignerService, question_form_service_1.QuestionFormService],
+        imports: [
+            app_routes_1.routing,
+            platform_browser_1.BrowserModule,
+            animations_1.BrowserAnimationsModule,
+            http_1.HttpModule,
+            forms_1.FormsModule,
+            forms_1.ReactiveFormsModule,
+            primeng_1.DataListModule,
+            dropdown_1.DropdownModule,
+            primeng_1.TabViewModule,
+            material_1.MdInputModule,
+            material_1.MdButtonModule
+        ],
+        declarations: [
+            app_component_1.AppComponent,
+            designer_component_1.DesignerComponent,
+            test_component_1.TestComponent,
+            question_form_component_1.QuestionFormComponent,
+            question_path_component_1.QuestionPathComponent,
+            login_register_component_1.LoginRegisterComponent
+        ],
+        providers: [
+            designer_service_1.DesignerService,
+            question_form_service_1.QuestionFormService,
+            user_management_service_1.UserManagementService
+        ],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

@@ -1,0 +1,56 @@
+<div class="form-container">
+    <form class="example-form" [formGroup]="form">
+        <h3>Գրանցում</h3>
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <md-input-container class="example-full-width">
+                        <input mdInput placeholder="Անուն" [(ngModel)]="user.firstName" formControlName="firstName"
+                               required>
+                        <md-error *ngIf="form.get('firstName').errors?.required">Ի՞նչ է ձեր անունը</md-error>
+                    </md-input-container>
+                </td>
+                <td>
+                    <md-input-container class="example-full-width">
+                        <input mdInput placeholder="Ազգանուն" [(ngModel)]="user.lastName" formControlName="lastName"
+                               required>
+                        <md-error *ngIf="form.get('lastName').errors?.required">Ի՞նչ է ձեր ազգանունը</md-error>
+                    </md-input-container>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <md-input-container class="example-full-width">
+                <input mdInput placeholder="Մուտքանուն" [(ngModel)]="user.login" formControlName="login" required>
+                <md-error *ngIf="form.get('login').errors?.required">Ընտրեք մուտքանուն մուտք գործելու համար</md-error>
+                <md-error *ngIf="form.get('login').errors?.used">Այս մուտքանունն արդեն զբաղեցված է, խնդրում ենք ընտրել
+                    այլ
+                    մուտքանուն
+                </md-error>
+
+            </md-input-container>
+            <md-input-container class="example-full-width">
+                <input mdInput placeholder="Էլ․ հասցե" [(ngModel)]="user.email" formControlName="email" required>
+                <md-error *ngIf="form.get('email').errors?.required">Լրացրեք ձեր էլ․ հասցեն</md-error>
+                <md-error *ngIf="form.get('email').errors?.used">Այս էլ․ հասցեն արդեն զբաղեցված է, խնդրում ենք ընտրել
+                    այլ
+                    էլ․ հասցե
+                </md-error>
+            </md-input-container>
+        </p>
+        <p>
+            <md-input-container class="example-full-width">
+                <input mdInput type="password" placeholder="Ընտրել գաղտնաբառ" [(ngModel)]="user.password"
+                       formControlName="password" required>
+                <md-error *ngIf="form.get('password').errors?.required">Լրացրեք գաղտնաբառը</md-error>
+            </md-input-container>
+            <md-input-container class="example-full-width">
+                <input mdInput type="password" placeholder="Կրկնել գաղտնաբառը" [(ngModel)]="user.repeatPassword"
+                       formControlName="repeatPassword" required>
+                <md-error *ngIf="form.get('repeatPassword').errors?.required">Խնդրում ենք կրկնել գաղտնաբառը</md-error>
+                <md-error *ngIf="form.get('repeatPassword').errors?.notSame">Գաղտնաբառերը չեն համապատասխանում</md-error>
+            </md-input-container>
+        </p>
+        <a md-raised-button routerLink="." style="float: right">Գրանցվել</a>
+    </form>
+</div>

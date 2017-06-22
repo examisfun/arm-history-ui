@@ -9,16 +9,42 @@ import {DesignerService} from "./designer/designer.service";
 import {TestComponent} from "./designer/test/test.component";
 import {QuestionFormComponent} from "./question_form/question_form.component";
 import {QuestionFormService} from "./question_form/question_form.service";
-import {DataListModule} from "primeng/primeng";
+import {DataListModule, TabViewModule} from "primeng/primeng";
 import {QuestionPathComponent} from "./designer/question-path/question-path.component";
 import {DropdownModule} from "primeng/components/dropdown/dropdown";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {UserManagementService} from "./user-management/user-management.service";
+import {LoginRegisterComponent} from "./user-management/login-register.component";
+import {MdButtonModule, MdInputModule} from "@angular/material";
 
 
 @NgModule({
-    imports: [BrowserModule, routing, HttpModule, FormsModule, ReactiveFormsModule, DataListModule, DropdownModule, BrowserAnimationsModule],
-    declarations: [AppComponent, DesignerComponent, TestComponent, QuestionFormComponent, QuestionPathComponent],
-    providers: [DesignerService, QuestionFormService],
+    imports: [
+        routing,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DataListModule,
+        DropdownModule,
+        TabViewModule,
+        MdInputModule,
+        MdButtonModule
+    ],
+    declarations: [
+        AppComponent,
+        DesignerComponent,
+        TestComponent,
+        QuestionFormComponent,
+        QuestionPathComponent,
+        LoginRegisterComponent
+    ],
+    providers: [
+        DesignerService,
+        QuestionFormService,
+        UserManagementService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

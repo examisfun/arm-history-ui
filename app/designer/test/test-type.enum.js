@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var TestType;
 (function (TestType) {
     TestType[TestType["STANDARD"] = 1] = "STANDARD";

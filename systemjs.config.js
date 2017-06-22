@@ -33,7 +33,8 @@
 		"router",
 		"router-deprecated",
 		"upgrade",
-		"animations"
+		"animations",
+		"material"
 	];
 
 	// Individual files (~300 requests):
