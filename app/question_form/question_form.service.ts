@@ -9,7 +9,7 @@ export class QuestionFormService {
     constructor(private http: Http) {
     }
 
-    public getSubject(): Observable<Subject[]>{
+    public getSubjects(): Observable<Subject[]>{
         return this.http.get("http://localhost:8082/armhistory/getSubjects")
         // ...and calling .json() on the response to return data
             .map((res:Response) => res.json())

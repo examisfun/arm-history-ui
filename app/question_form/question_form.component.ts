@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {QuestionFormService} from "./question_form.service";
 import {Subject} from "./models/subject.model";
 import {Header} from "./models/header.model";
@@ -26,7 +26,7 @@ export class QuestionFormComponent implements OnInit{
     }
 
     loadSubjects(){
-        this.questionFormService.getSubject().subscribe(
+        this.questionFormService.getSubjects().subscribe(
             subjects => this.subjects = subjects, //Bind to view
             err => {
                 // Log errors if any

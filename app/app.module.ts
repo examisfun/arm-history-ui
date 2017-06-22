@@ -11,9 +11,12 @@ import {QuestionFormComponent} from "./question_form/question_form.component";
 import {QuestionFormService} from "./question_form/question_form.service";
 import {DataListModule} from "primeng/primeng";
 import {QuestionPathComponent} from "./designer/question-path/question-path.component";
+import {DropdownModule} from "primeng/components/dropdown/dropdown";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 
 @NgModule({
-    imports: [BrowserModule, routing, HttpModule, FormsModule, ReactiveFormsModule, DataListModule],
+    imports: [BrowserModule, routing, HttpModule, FormsModule, ReactiveFormsModule, DataListModule, DropdownModule, BrowserAnimationsModule],
     declarations: [AppComponent, DesignerComponent, TestComponent, QuestionFormComponent, QuestionPathComponent],
     providers: [DesignerService, QuestionFormService],
     bootstrap: [AppComponent]
