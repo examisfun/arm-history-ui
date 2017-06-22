@@ -10,7 +10,7 @@
         "removeComments": false,
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
-        "types": ["core-js", "node", "jquery"]
+        "types": ["core-js", "node", "jquery", "angular-material"]
     },
     "exclude": ["node_modules"]
 }

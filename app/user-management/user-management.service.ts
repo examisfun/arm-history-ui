@@ -17,7 +17,7 @@ export class UserManagementService {
 
     isEmailAvailable(email: string): Observable<boolean> {
         let params: URLSearchParams = new URLSearchParams();
-        params.set('email', email || "a");
+        params.set('email', email);
 
         return this.http.get("http://localhost:8082/authentication/checkEmail", {search: params})
             .map(response => response.json());

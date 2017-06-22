@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
-import {AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {UserModel} from "./models/user.model";
 import {UserManagementService} from "./user-management.service";
+import {Observable} from "rxjs/Rx";
 
 @Component({
     moduleId: module.id,
@@ -26,13 +27,27 @@ export class LoginRegisterComponent {
     }
 
     getLoginValidation(control: AbstractControl) {
-        return this.userManagementService.isLoginAvailable(control.value)
-            .map(used => used ? {used: true} : null)
+        if (control.valueChanges) {
+            return control.valueChanges.debounceTime(500)
+                .flatMap(value => this.userManagementService.isLoginAvailable(value))
+                .map(used => used ? {used: true} : null)
+                .first();
+        }
+        else {
+            return Observable.of(null)
+        }
     }
 
     getEmailValidation(control: AbstractControl) {
-        return this.userManagementService.isEmailAvailable(control.value)
-            .map(used => used ? {used: true} : null)
+        if (control.valueChanges) {
+            return control.valueChanges.debounceTime(500)
+                .flatMap(value => this.userManagementService.isEmailAvailable(value))
+                .map(used => used ? {used: true} : null)
+                .first();
+        }
+        else {
+            return Observable.of(null)
+        }
     }
 
     validatePasswords(passwordKey: string, passwordConfirmationKey: string) {
@@ -47,8 +62,4 @@ export class LoginRegisterComponent {
             }
         }
     };
-
-    get errors() {
-        return JSON.stringify(this.form.get('firstName').errors)
-    }
 }
