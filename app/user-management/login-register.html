@@ -1,19 +1,17 @@
 <div class="form-container">
-    <form class="example-form" [formGroup]="form">
+    <form novalidate class="example-form" [formGroup]="form" (ngSubmit)="submitForm()">
         <h3>Գրանցում</h3>
         <table class="example-full-width" cellspacing="0">
             <tr>
                 <td>
                     <md-input-container class="example-full-width">
-                        <input mdInput placeholder="Անուն" [(ngModel)]="user.firstName" formControlName="firstName"
-                               required>
+                        <input mdInput placeholder="Անուն" [(ngModel)]="user.firstName" formControlName="firstName">
                         <md-error *ngIf="form.get('firstName').errors?.required">Ի՞նչ է ձեր անունը</md-error>
                     </md-input-container>
                 </td>
                 <td>
                     <md-input-container class="example-full-width">
-                        <input mdInput placeholder="Ազգանուն" [(ngModel)]="user.lastName" formControlName="lastName"
-                               required>
+                        <input mdInput placeholder="Ազգանուն" [(ngModel)]="user.lastName" formControlName="lastName">
                         <md-error *ngIf="form.get('lastName').errors?.required">Ի՞նչ է ձեր ազգանունը</md-error>
                     </md-input-container>
                 </td>
@@ -21,36 +19,42 @@
         </table>
         <p>
             <md-input-container class="example-full-width">
-                <input mdInput placeholder="Մուտքանուն" [(ngModel)]="user.login" formControlName="login" required>
+                <input mdInput placeholder="Մուտքանուն" [(ngModel)]="user.login" formControlName="login">
                 <md-error *ngIf="form.get('login').errors?.required">Ընտրեք մուտքանուն մուտք գործելու համար</md-error>
+                <md-error *ngIf="form.get('login').errors?.minlength">Մուտքանունը պետք է պարունակի նվազագույնը 6
+                    սիմվոլ
+                </md-error>
                 <md-error *ngIf="form.get('login').errors?.used">Այս մուտքանունն արդեն զբաղեցված է, խնդրում ենք ընտրել
-                    այլ
-                    մուտքանուն
+                    այլ մուտքանուն
                 </md-error>
 
             </md-input-container>
             <md-input-container class="example-full-width">
-                <input mdInput placeholder="Էլ․ հասցե" [(ngModel)]="user.email" formControlName="email" required>
-                <md-error *ngIf="form.get('email').errors?.required">Լրացրեք ձեր էլ․ հասցեն</md-error>
-                <md-error *ngIf="form.get('email').errors?.used">Այս էլ․ հասցեն արդեն զբաղեցված է, խնդրում ենք ընտրել
-                    այլ
-                    էլ․ հասցե
+                <input mdInput placeholder="Էլեկտրոնային հասցե" [(ngModel)]="user.email" formControlName="email">
+                <md-error *ngIf="form.get('email').errors?.required">Լրացրեք ձեր էլեկտրոնային հասցեն</md-error>
+                <md-error *ngIf="form.get('email').errors?.pattern">Ձեր լրացրած էլեկտրոնային հասցեն անվավեր է</md-error>
+                <md-error *ngIf="form.get('email').errors?.used">Այս էլեկտրոնային հասցեն արդեն զբաղեցված է, խնդրում ենք
+                    ընտրել այլ էլեկտրոնային հասցե
                 </md-error>
             </md-input-container>
         </p>
         <p>
             <md-input-container class="example-full-width">
                 <input mdInput type="password" placeholder="Ընտրել գաղտնաբառ" [(ngModel)]="user.password"
-                       formControlName="password" required>
+                       formControlName="password">
                 <md-error *ngIf="form.get('password').errors?.required">Լրացրեք գաղտնաբառը</md-error>
+                <md-error *ngIf="form.get('password').errors?.minlength">Գաղտնաբառը պետք է պարունակի նվազագույնը 6
+                    սիմվոլ
+                </md-error>
             </md-input-container>
             <md-input-container class="example-full-width">
                 <input mdInput type="password" placeholder="Կրկնել գաղտնաբառը" [(ngModel)]="user.repeatPassword"
-                       formControlName="repeatPassword" required>
+                       formControlName="repeatPassword">
                 <md-error *ngIf="form.get('repeatPassword').errors?.required">Խնդրում ենք կրկնել գաղտնաբառը</md-error>
                 <md-error *ngIf="form.get('repeatPassword').errors?.notSame">Գաղտնաբառերը չեն համապատասխանում</md-error>
             </md-input-container>
         </p>
-        <a md-raised-button routerLink="." style="float: right">Գրանցվել</a>
+        <button md-raised-button type="submit" [disabled]="form.invalid || form.pending" style="float: right">Գրանցվել
+        </button>
     </form>
 </div>
