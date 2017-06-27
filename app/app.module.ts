@@ -13,14 +13,13 @@ import {DataListModule, TabViewModule} from "primeng/primeng";
 import {QuestionPathComponent} from "./designer/question-path/question-path.component";
 import {DropdownModule} from "primeng/components/dropdown/dropdown";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {UserManagementService} from "./user-management/user-management.service";
-import {LoginRegisterComponent} from "./user-management/login-register.component";
-import {MdButtonModule, MdInputModule} from "@angular/material";
+import {CommonModule} from "@angular/common";
 
 
 @NgModule({
     imports: [
         routing,
+        CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
@@ -28,22 +27,18 @@ import {MdButtonModule, MdInputModule} from "@angular/material";
         ReactiveFormsModule,
         DataListModule,
         DropdownModule,
-        TabViewModule,
-        MdInputModule,
-        MdButtonModule
+        TabViewModule
     ],
     declarations: [
         AppComponent,
         DesignerComponent,
         TestComponent,
         QuestionFormComponent,
-        QuestionPathComponent,
-        LoginRegisterComponent
+        QuestionPathComponent
     ],
     providers: [
         DesignerService,
         QuestionFormService,
-        UserManagementService
     ],
     bootstrap: [AppComponent]
 })

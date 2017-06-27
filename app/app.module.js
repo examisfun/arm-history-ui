@@ -21,9 +21,7 @@ var primeng_1 = require("primeng/primeng");
 var question_path_component_1 = require("./designer/question-path/question-path.component");
 var dropdown_1 = require("primeng/components/dropdown/dropdown");
 var animations_1 = require("@angular/platform-browser/animations");
-var user_management_service_1 = require("./user-management/user-management.service");
-var login_register_component_1 = require("./user-management/login-register.component");
-var material_1 = require("@angular/material");
+var common_1 = require("@angular/common");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,6 +31,7 @@ AppModule = __decorate([
     core_1.NgModule({
         imports: [
             app_routes_1.routing,
+            common_1.CommonModule,
             platform_browser_1.BrowserModule,
             animations_1.BrowserAnimationsModule,
             http_1.HttpModule,
@@ -40,22 +39,18 @@ AppModule = __decorate([
             forms_1.ReactiveFormsModule,
             primeng_1.DataListModule,
             dropdown_1.DropdownModule,
-            primeng_1.TabViewModule,
-            material_1.MdInputModule,
-            material_1.MdButtonModule
+            primeng_1.TabViewModule
         ],
         declarations: [
             app_component_1.AppComponent,
             designer_component_1.DesignerComponent,
             test_component_1.TestComponent,
             question_form_component_1.QuestionFormComponent,
-            question_path_component_1.QuestionPathComponent,
-            login_register_component_1.LoginRegisterComponent
+            question_path_component_1.QuestionPathComponent
         ],
         providers: [
             designer_service_1.DesignerService,
             question_form_service_1.QuestionFormService,
-            user_management_service_1.UserManagementService
         ],
         bootstrap: [app_component_1.AppComponent]
     })

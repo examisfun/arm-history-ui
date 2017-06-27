@@ -1,18 +1,18 @@
 import {Component} from "@angular/core";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserModel} from "./models/user.model";
-import {UserManagementService} from "./user-management.service";
+import {UserLoginModel} from "../models/user-register.model";
+import {UserManagementService} from "../user-management.service";
 import {Observable} from "rxjs/Rx";
-import {UserDto} from "./models/user.dto";
+import {UserRegisterDto} from "../models/dto/user-register.dto";
 
 @Component({
     moduleId: module.id,
     selector: 'login-register',
-    templateUrl: "login-register.html",
-    styleUrls: ["login-register.css"]
+    templateUrl: "register.html",
+    styleUrls: ["register.css"]
 })
-export class LoginRegisterComponent {
-    user = new UserModel();
+export class RegisterComponent {
+    user = new UserLoginModel();
     form: FormGroup;
 
     constructor(private userManagementService: UserManagementService,
@@ -67,7 +67,7 @@ export class LoginRegisterComponent {
     };
 
     submitForm() {
-        let userDto = <UserDto> {
+        let userDto = <UserRegisterDto> {
             login: this.user.login,
             email: this.user.email,
             firstName: this.user.firstName,

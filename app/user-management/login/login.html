@@ -1,0 +1,19 @@
+<div class="form-container">
+    <form novalidate class="example-form" [formGroup]="form" (ngSubmit)="submitForm()">
+        <h3>Բարի գալուստ</h3>
+        <p>
+            <md-input-container class="example-full-width">
+                <input mdInput placeholder="Մուտքանուն" [(ngModel)]="user.login" formControlName="login">
+                <md-error *ngIf="form.get('login').errors?.required">Ներմուծեք ձեր մուտքանունը</md-error>
+            </md-input-container>
+            <md-input-container class="example-full-width">
+                <input mdInput type="password" placeholder="Գաղտնաբառ" [(ngModel)]="user.password"
+                       formControlName="password">
+                <md-error *ngIf="form.get('password').errors?.required">Լրացրեք գաղտնաբառը</md-error>
+            </md-input-container>
+           <md-error *ngIf="errorMessage">{{errorMessage}}</md-error>
+
+        </p>
+        <button md-raised-button type="submit" [disabled]="form.invalid" style="float: right">Մուտք գործել</button>
+    </form>
+</div>

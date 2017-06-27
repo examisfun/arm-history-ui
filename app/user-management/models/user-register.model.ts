@@ -1,4 +1,5 @@
-export class UserModel {
+import {UserRegisterDto} from "./dto/user-register.dto";
+export class UserLoginModel {
     private _firstName: string;
     private _lastName: string;
     private _email: string;
@@ -6,23 +7,15 @@ export class UserModel {
     private _repeatPassword: string;
     private _login: string;
 
-    constructor(user?: {
-                    firstName: string,
-                    lastName: string,
-                    email: string,
-                    password: string,
-                    repeatPassword: string,
-                    login: string
-                }) {
-        if(user) {
-            this._firstName = user.firstName;
-            this._lastName = user.lastName;
-            this._email = user.email;
-            this._password = user.password;
-            this._repeatPassword = user.repeatPassword;
-            this._login = user.login;
+    constructor(userRegisterDto?: UserRegisterDto) {
+        if (userRegisterDto) {
+            this._firstName = userRegisterDto.firstName;
+            this._lastName = userRegisterDto.lastName;
+            this._email = userRegisterDto.email;
+            this._password = userRegisterDto.password;
+            this._repeatPassword = userRegisterDto.repeatPassword;
+            this._login = userRegisterDto.login;
         }
-
     }
 
     get firstName(): string {
